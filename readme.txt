@@ -1,7 +1,7 @@
 === Photoswipe Masonry Gallery ===
 
 Contributors: deanoakley
-Author: Dean Oakley
+Author: Web Design Gold Coast
 Author URI: http://thriveweb.com.au/
 Plugin URI: http://thriveweb.com.au/the-lab/photoswipe/
 Tags: photoswipe, gallery, image gallery, website gallery, photoalbum, photogallery, photo, plugin, images, slideshow, short code, responsive, native gallery
