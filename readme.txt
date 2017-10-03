@@ -54,6 +54,7 @@ See a [demo here](http://thriveweb.com.au/the-lab/PhotoSwipe/ "PhotoSwipeWP")
 
 = 1.2.5 =
 * Readme and testing
+* See v2 dev https://github.com/thriveweb/photoswipe-masonry-v2
 
 = 1.2.4 =
 * fix for WP 4.6.1
