@@ -4,7 +4,7 @@ Plugin Name: Photoswipe Masonry
 Plugin URI: http://thriveweb.com.au/the-lab/photoswipe/
 Description: This is a image gallery plugin for WordPress built using PhotoSwipe from  Dmitry Semenov.
 <a href="http://photoswipe.com/">PhotoSwipe</a>
-Author: Dean Oakley
+Author: Web Design Gold Coast
 Author URI: http://thriveweb.com.au/
 Version: 1.2.5
 Text Domain: photoswipe-masonry
