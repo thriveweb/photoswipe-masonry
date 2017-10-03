@@ -5,7 +5,7 @@ Author URI: http://thriveweb.com.au/
 Plugin URI: http://thriveweb.com.au/the-lab/photoswipe/
 Tags: photoswipe, gallery, image gallery, website gallery, photoalbum, photogallery, photo, plugin, images, slideshow, short code, responsive, native gallery
 Requires at least: 3.0
-Tested up to: 4.6.1
+Tested up to: 4.8.2
 Stable tag: 1.2.4
 
 PhotoSwipe Masonry takes advantage of the built in gallery features of WordPress. The gallery is built using PhotoSwipe from Dmitry Semenov.
