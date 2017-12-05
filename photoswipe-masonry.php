@@ -6,7 +6,7 @@ Description: This is a image gallery plugin for WordPress built using PhotoSwipe
 <a href="http://photoswipe.com/">PhotoSwipe</a>
 Author: Web Design Gold Coast
 Author URI: http://thriveweb.com.au/
-Version: 1.2.6
+Version: 1.2.7
 Text Domain: photoswipe-masonry
 */
 
@@ -175,8 +175,8 @@ add_action('admin_menu', array('photoswipe_plugin_options', 'update'));
 $options = get_option('photoswipe_options');
 
 //image sizes - No cropping for a nice zoom effect
-add_image_size('photoswipe_thumbnails', $options['thumbnail_width'] * 2, $options['thumbnail_height'] * 2, false);
-add_image_size('photoswipe_full', $options['max_image_width'], $options['max_image_height'], false);
+add_image_size('photoswipe_thumbnails', (int) $options['thumbnail_width'] * 2 , (int) $options['thumbnail_height'] * 2 , false);
+add_image_size('photoswipe_full', (int) $options['max_image_width'] , (int) $options['max_image_height'] , false);
 
 //Admin CSS
 function photoswipe_register_head() {
