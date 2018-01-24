@@ -38,7 +38,10 @@ var photoswipe_masonry = function($){
 
 		$.each(items, function(index, value) {
 			image[index]     = new Image();
-			image[index].src = value['src'];
+			/*
+			 * HOTFIX: Stop Photoswipe-Masonry from loading high res images on page load! Only thumbnails should be loaded!
+			 * image[index].src = value['src'];
+			 */
 		});
 
 		$pic.on('click', 'figure', function(event) {
