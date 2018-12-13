@@ -380,44 +380,32 @@ function photoswipe_shortcode( $attr ) {
 
 
 		$output_buffer .= "
-
 		<style type='text/css'>
-
 			/* PhotoSwipe Plugin */
 			.psgal {
 				margin: auto;
 				padding-bottom:40px;
-
 				-webkit-transition: all 0.4s ease;
 				-moz-transition: all 0.4s ease;
 				-o-transition: all 0.4s ease;
 				transition: all 0.4s ease;
-
-				opacity:0.1;
-				";
+				opacity:0.1;";
 
 				if($options['use_masonry']) $output_buffer .="opacity:1; text-align:center;";
 
 				$output_buffer .= "
-
 			}
-
 			.psgal.photoswipe_showme{
 				opacity:1;
 			}
-
 			.psgal figure {
-				float: left;
+				float: left;";
 
-				";
-
-				if($options['use_masonry']) $output_buffer .="float:none; display:inline-block;;";
+				if($options['use_masonry']) $output_buffer .="float:none; display:inline-block;";
 
 				$output_buffer .= "
-
 				text-align: center;
 				width: ".$options['thumbnail_width']."px;
-
 				padding:5px;
 				margin: 0px;
 				box-sizing:border-box;
@@ -425,7 +413,6 @@ function photoswipe_shortcode( $attr ) {
 			.psgal a{
 				display:block;
 			}
-
 			.psgal img {
 				margin:auto;
 				max-width:100%;
@@ -436,21 +423,17 @@ function photoswipe_shortcode( $attr ) {
 			.psgal figure figcaption{
 				font-size:13px;
 			}
-
 			.msnry{
 				margin:auto;
 			}
 			.pswp__caption__center{
 				text-align: center;
-			}
-			";
+			}";
 
 			if(!$options['show_captions']) $output_buffer .="
-
 			.photoswipe-gallery-caption{
 				display:none;
 			}
-
 			";
 
 			$output_buffer .= "
@@ -495,18 +478,13 @@ function photoswipe_shortcode( $attr ) {
 		<div style='clear:both'></div>
 
 		<script type='text/javascript'>
-
 			var container_".$post_id." = document.querySelector('#psgal_".$post_id."');
 			var msnry;
-
 			// initialize  after all images have loaded
-			imagesLoaded( container_".$post_id.", function() {
-
-				";
+			imagesLoaded( container_".$post_id.", function() {";
 
 				if(!$options['use_masonry']){
 					 $output_buffer .="
-
 						// initialize Masonry after all images have loaded
 						new Masonry( container_".$post_id.", {
 						  // options...
@@ -514,17 +492,11 @@ function photoswipe_shortcode( $attr ) {
 						  //columnWidth: ".$options['thumbnail_width'].",
 						  isFitWidth: true
 						});
-
-						(container_".$post_id.").className += ' photoswipe_showme';
-
-						";
+						(container_".$post_id.").className += ' photoswipe_showme';";
 				}
 
 				$output_buffer .="
-
 			});
-
-
 		</script>
 
 	";
