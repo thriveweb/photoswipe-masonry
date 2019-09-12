@@ -441,7 +441,9 @@ function photoswipe_shortcode( $attr ) {
 
 		$size_class = sanitize_html_class( $args['size'] );
 		$output_buffer .=' <div style="clear:both"></div>
-
+		
+		<div class="psgal_wrap">
+		
 		<div id="psgal_'.$post_id.'" class="psgal gallery-columns-'.$columns.' gallery-size-'.$size_class.'" itemscope itemtype="http://schema.org/ImageGallery" >';
 
 
@@ -473,7 +475,7 @@ function photoswipe_shortcode( $attr ) {
 
 
 
-		$output_buffer .="</div>
+		$output_buffer .="</div></div>
 
 		<div style='clear:both'></div>
 
