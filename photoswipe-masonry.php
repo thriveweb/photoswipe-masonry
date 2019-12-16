@@ -6,7 +6,7 @@ Description: This is a image gallery plugin for WordPress built using PhotoSwipe
 <a href="http://photoswipe.com/">PhotoSwipe</a>
 Author: Web Design Gold Coast
 Author URI: http://thriveweb.com.au/
-Version: 1.2.8
+Version: 1.2.9
 Text Domain: photoswipe-masonry
 */
 
@@ -441,9 +441,9 @@ function photoswipe_shortcode( $attr ) {
 
 		$size_class = sanitize_html_class( $args['size'] );
 		$output_buffer .=' <div style="clear:both"></div>
-		
+
 		<div class="psgal_wrap">
-		
+
 		<div id="psgal_'.$post_id.'" class="psgal gallery-columns-'.$columns.' gallery-size-'.$size_class.'" itemscope itemtype="http://schema.org/ImageGallery" >';
 
 
