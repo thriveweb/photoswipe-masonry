@@ -1,0 +1,47 @@
+/* PhotoSwipe Plugin - customize how your gallery looks here */
+/* TODO - good to expose it to plugin settings in future  */
+
+.psgal {
+    margin: auto;
+    padding-bottom: 40px;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    opacity: 0.1;
+}
+
+.psgal.photoswipe_showme{
+    opacity: 1;
+}
+
+.psgal figure {
+    float: left;
+    text-align: center;
+    padding: 5px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.psgal a{
+    display:block;
+}
+
+.psgal img {
+    margin: auto;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    border: 0;
+}
+
+.psgal figure figcaption{
+    font-size: 13px;
+}
+
+.msnry {
+    margin: auto;
+}
+.pswp__caption__center{
+    text-align: center;
+}

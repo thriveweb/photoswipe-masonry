@@ -30,6 +30,8 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
 	die('Illegal Entry');
 }
 
+include_once("file-gallery.php");
+
 //============================== PhotoSwipe options ========================//
 class photoswipe_plugin_options {
 
@@ -320,10 +322,9 @@ add_action('wp_enqueue_scripts', 'photoswipe_scripts_method');
 
 add_shortcode( 'gallery', 'photoswipe_shortcode' );
 add_shortcode( 'photoswipe', 'photoswipe_shortcode' );
-
+add_shortcode( 'fgallery', 'photoswipe_folder_shortcode' );
 
 function photoswipe_shortcode( $attr ) {
-
 	global $post;
 	global $photoswipe_count;
 
@@ -343,170 +344,149 @@ function photoswipe_shortcode( $attr ) {
 		'columns'    => 3,
 		'size'       => 'thumbnail',
 		'order'      => 'DESC',
-		'orderby'    => 'menu_order ID',
+        'orderby'    => 'menu_order ID',
+        'folder' 	 => '',
 		'include'    => '',
 		'exclude'    => ''
 	), $attr);
 
+    $thumbWidth = $options['thumbnail_width'];
+
+    $file_images = null;
+    if (!empty($args['folder'])) {
+        $fileGallery = new FileGallery();
+        $file_images = $fileGallery -> get_images_from_folder($args['folder'], $thumbWidth);
+        if (empty($file_images)) {
+            return 'No images: ' . $args['folder'];
+        }
+    } else if ( !empty($args['include']) ) {
+        //"ids" == "inc"
+        $include = preg_replace( '/[^0-9,]+/', '', $args['include'] );
+        $_attachments = get_posts( array('include' => $args['include'], 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $args['order'], 'orderby' => $args['orderby']) );
+
+        $attachments = array();
+        foreach ( $_attachments as $key => $val ) {
+            $attachments[$val->ID] = $_attachments[$key];
+        }
+    } elseif ( !empty($args['exclude']) ) {
+        $exclude = preg_replace( '/[^0-9,]+/', '', $args['exclude'] );
+        $attachments = get_children( array('post_parent' => $args['id'], 'exclude' => $args['exclude'], 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $args['order'], 'orderby' => $args['orderby']) );
+    } else {
+        $attachments = get_children( array('post_parent' => $args['id'], 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $args['order'], 'orderby' => $args['orderby']) );
+    }
+
 	$photoswipe_count += 1;
 	$post_id = intval($post->ID) . '_' . $photoswipe_count;
+    $columns = intval($args['columns']);
 
+    $itemwidth = $columns > 0 ? floor(100/$columns) : 100; // TODO - not used
+    
+    $customCssUrl = plugins_url('custom.css', __FILE__);
+    $output_buffer = "
+    <link rel='stylesheet' type='text/css' href=".$customCssUrl." />
+    <style type='text/css'>
+        /* PhotoSwipe Plugin */
+        .psgal {
+            ";
+            if ($options['use_masonry']) $output_buffer .=  "opacity:1; text-align:center;";
+            $output_buffer .= "
+        }
+        .psgal figure {
+            ";
+            if($options['use_masonry']) $output_buffer .="float:none; display:inline-block;";
+            $output_buffer .= "
+            width: ".$thumbWidth."px;
+        }
+        ";
+        if(!$options['show_captions']) $output_buffer .="
+        .photoswipe-gallery-caption{
+            display:none;
+        }
+        ";
+    $output_buffer .= "
+    </style>";
 
-	$output_buffer='';
+    $size_class = sanitize_html_class( $args['size'] );
+    $output_buffer .=' <div style="clear:both"></div>
 
-	    if ( !empty($args['include']) ) {
+    <div class="psgal_wrap">
 
-			//"ids" == "inc"
+    <div id="psgal_'.$post_id.'" class="psgal gallery-columns-'.$columns.' gallery-size-'.$size_class.'" itemscope itemtype="http://schema.org/ImageGallery" >';
 
-			$include = preg_replace( '/[^0-9,]+/', '', $args['include'] );
-			$_attachments = get_posts( array('include' => $args['include'], 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $args['order'], 'orderby' => $args['orderby']) );
+    if (!is_null($file_images)) {
+        $output_buffer .= create_html_from_file_images($file_images);
+    } else if (!empty($attachments)) {
+        $output_buffer .= create_html_from_attachments($attachments);
+    }
 
-			$attachments = array();
-			foreach ( $_attachments as $key => $val ) {
-				$attachments[$val->ID] = $_attachments[$key];
-			}
+    $output_buffer .="</div></div>
 
-		} elseif ( !empty($args['exclude']) ) {
-			$exclude = preg_replace( '/[^0-9,]+/', '', $args['exclude'] );
-			$attachments = get_children( array('post_parent' => $args['id'], 'exclude' => $args['exclude'], 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $args['order'], 'orderby' => $args['orderby']) );
-		} else {
+    <div style='clear:both'></div>
 
-			$attachments = get_children( array('post_parent' => $args['id'], 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $args['order'], 'orderby' => $args['orderby']) );
+    <script type='text/javascript'>
+        var container_".$post_id." = document.querySelector('#psgal_".$post_id."');
+        var msnry;
+        // initialize  after all images have loaded
+        imagesLoaded( container_".$post_id.", function() {";
 
-		}
+            if(!$options['use_masonry']){
+                    $output_buffer .="
+                    // initialize Masonry after all images have loaded
+                    new Masonry( container_".$post_id.", {
+                        // options...
+                        itemSelector: '.msnry_item',
+                        //columnWidth: ".$thumbWidth.",
+                        isFitWidth: true
+                    });
+                    (container_".$post_id.").className += ' photoswipe_showme';";
+            }
 
-		$columns = intval($args['columns']);
-        $itemwidth = $columns > 0 ? floor(100/$columns) : 100;
-
-
-		$output_buffer .= "
-		<style type='text/css'>
-			/* PhotoSwipe Plugin */
-			.psgal {
-				margin: auto;
-				padding-bottom:40px;
-				-webkit-transition: all 0.4s ease;
-				-moz-transition: all 0.4s ease;
-				-o-transition: all 0.4s ease;
-				transition: all 0.4s ease;
-				opacity:0.1;";
-
-				if($options['use_masonry']) $output_buffer .="opacity:1; text-align:center;";
-
-				$output_buffer .= "
-			}
-			.psgal.photoswipe_showme{
-				opacity:1;
-			}
-			.psgal figure {
-				float: left;";
-
-				if($options['use_masonry']) $output_buffer .="float:none; display:inline-block;";
-
-				$output_buffer .= "
-				text-align: center;
-				width: ".$options['thumbnail_width']."px;
-				padding:5px;
-				margin: 0px;
-				box-sizing:border-box;
-			}
-			.psgal a{
-				display:block;
-			}
-			.psgal img {
-				margin:auto;
-				max-width:100%;
-				width: auto;
-				height: auto;
-				border: 0;
-			}
-			.psgal figure figcaption{
-				font-size:13px;
-			}
-			.msnry{
-				margin:auto;
-			}
-			.pswp__caption__center{
-				text-align: center;
-			}";
-
-			if(!$options['show_captions']) $output_buffer .="
-			.photoswipe-gallery-caption{
-				display:none;
-			}
-			";
-
-			$output_buffer .= "
-		</style>";
-
-		$size_class = sanitize_html_class( $args['size'] );
-		$output_buffer .=' <div style="clear:both"></div>
-
-		<div class="psgal_wrap">
-
-		<div id="psgal_'.$post_id.'" class="psgal gallery-columns-'.$columns.' gallery-size-'.$size_class.'" itemscope itemtype="http://schema.org/ImageGallery" >';
-
-
-		if ( !empty($attachments) ) {
-			foreach ( $attachments as $aid => $attachment ) {
-
-				$thumb = wp_get_attachment_image_src( $aid , 'photoswipe_thumbnails');
-
-				$full = wp_get_attachment_image_src( $aid , 'photoswipe_full');
-
-				$_post = get_post($aid);
-
-				$image_title = esc_attr($_post->post_title);
-				$image_alttext = get_post_meta($aid, '_wp_attachment_image_alt', true);
-				$image_caption = $_post->post_excerpt;
-				$image_description = $_post->post_content;
-
-				$output_buffer .='
-				<figure class="msnry_item" itemscope itemtype="http://schema.org/ImageObject">
-					<a href="'. $full[0] .'" itemprop="contentUrl" data-size="'.$full[1].'x'.$full[2].'" data-caption="'. $image_caption .'" >
-				        <img src='. $thumb[0] .' itemprop="thumbnail" alt="'.$image_alttext.'"  />
-				    </a>
-				    <figcaption class="photoswipe-gallery-caption" >'. $image_caption .'</figcaption>
-			    </figure>
-				';
-
-			}
-		}
-
-
-
-		$output_buffer .="</div></div>
-
-		<div style='clear:both'></div>
-
-		<script type='text/javascript'>
-			var container_".$post_id." = document.querySelector('#psgal_".$post_id."');
-			var msnry;
-			// initialize  after all images have loaded
-			imagesLoaded( container_".$post_id.", function() {";
-
-				if(!$options['use_masonry']){
-					 $output_buffer .="
-						// initialize Masonry after all images have loaded
-						new Masonry( container_".$post_id.", {
-						  // options...
-						  itemSelector: '.msnry_item',
-						  //columnWidth: ".$options['thumbnail_width'].",
-						  isFitWidth: true
-						});
-						(container_".$post_id.").className += ' photoswipe_showme';";
-				}
-
-				$output_buffer .="
-			});
-		</script>
-
+            $output_buffer .="
+        });
+    </script>
 	";
 
-
-		return $output_buffer;
+	return $output_buffer;
 }
 
+function create_html_from_attachments($attachments) {
+    $result = '';
+    foreach ($attachments as $aid => $attachment) {
+        $thumb = wp_get_attachment_image_src($aid, 'photoswipe_thumbnails');
+        $full = wp_get_attachment_image_src($aid, 'photoswipe_full');
+        $_post = get_post($aid);
+        $image_title = esc_attr($_post->post_title); // TODO - not used
+        $image_alttext = get_post_meta($aid, '_wp_attachment_image_alt', true);
+        $image_caption = $_post->post_excerpt;
+        $image_description = $_post->post_content; // TODO - not used
+        $result .= get_figure_html($full[0], $thumb[0], $image_caption, $image_alttext, $full[1], $full[2]);
+    }
+    return $result;
+}
+
+function create_html_from_file_images($images) {
+    $result = '';
+    foreach ($images as $image) {
+        $thumb = $image['thumb'];
+        $full = $image['full'];
+        $data = $image['data'];
+        $image_alttext = esc_attr($data['alt']);
+        $image_caption = esc_html($data['caption']);
+        $result .= get_figure_html($full, $thumb, $image_caption, $image_alttext, $data['x'], $data['y']);
+    }
+    return $result;
+}
+
+function get_figure_html($fullSrc, $thumbSrc, $caption, $alt, $x, $y) {
+    return '
+    <figure class="msnry_item" itemscope itemtype="http://schema.org/ImageObject">
+        <a href="'. $fullSrc .'" itemprop="contentUrl" data-size="'.$x.'x'.$y.'" data-caption="'. $caption .'" >
+            <img src='. $thumbSrc .' itemprop="thumbnail" alt="'.$alt.'"  />
+        </a>
+        <figcaption class="photoswipe-gallery-caption" >'. $caption .'</figcaption>
+    </figure>
+    ';
+}
 
 function photoswipe_footer() {
 	echo <<<EOF
