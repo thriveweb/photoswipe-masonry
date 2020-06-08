@@ -36,10 +36,10 @@ var photoswipe_masonry = function($){
 
 		var items = getItems();
 
-		$.each(items, function(index, value) {
+		/*$.each(items, function(index, value) {
 			image[index]     = new Image();
 			image[index].src = value['src'];
-		});
+		});*/
 
 		$pic.on('click', 'figure', function(event) {
 
@@ -93,10 +93,10 @@ var photoswipe_masonry = function($){
 
 		var items = getItems();
 
-		$.each(items, function(index, value) {
+		/*$.each(items, function(index, value) {
 			image[index]     = new Image();
 			image[index].src = value['src'];
-		});
+		});*/
 
 		$pic.on('click', 'img', function(event) {
 
