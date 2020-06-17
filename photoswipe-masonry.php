@@ -6,7 +6,7 @@ Description: This is a image gallery plugin for WordPress built using PhotoSwipe
 <a href="http://photoswipe.com/">PhotoSwipe</a>
 Author: Web Design Gold Coast
 Author URI: http://thriveweb.com.au/
-Version: 1.2.9
+Version: 1.2.10
 Text Domain: photoswipe-masonry
 */
 
