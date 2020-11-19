@@ -83,7 +83,8 @@ var photoswipe_masonry = function($){
 					w   : $width,
 					h   : $height,
 					el	: $(this),
-					msrc: $(this).find('img').attr('src')
+					msrc: $(this).find('img').attr('src'),
+					title: $(this).find('img').attr('title')
 				}
 
 				items.push(item);
