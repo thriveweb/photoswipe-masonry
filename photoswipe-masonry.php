@@ -464,7 +464,7 @@ function photoswipe_shortcode( $attr ) {
 				$output_buffer .='
 				<figure class="msnry_item" itemscope itemtype="http://schema.org/ImageObject">
 					<a href="'. $full[0] .'" itemprop="contentUrl" data-size="'.$full[1].'x'.$full[2].'" data-caption="'. $image_caption .'" >
-				        <img src="'. $thumb[0] .'" itemprop="thumbnail" alt="'.$image_alttext.'"  />
+				        <img class="msnry_image" src="'. $thumb[0] .'" itemprop="thumbnail" alt="'.$image_alttext.'"  />
 				    </a>
 				    <figcaption class="photoswipe-gallery-caption" >'. $image_caption .'</figcaption>
 			    </figure>
