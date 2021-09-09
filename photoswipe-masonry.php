@@ -491,8 +491,9 @@ function photoswipe_shortcode( $attr ) {
 						new Masonry( container_".$post_id.", {
 						  // options...
 						  itemSelector: '.msnry_item',
-						  //columnWidth: ".$options['thumbnail_width'].",
-						  isFitWidth: true
+						  columnWidth: ".$options['thumbnail_width'].",
+						  fitWidth: true,
+						  resize: true
 						});
 						(container_".$post_id.").className += ' photoswipe_showme';";
 				}
