@@ -463,8 +463,8 @@ function photoswipe_shortcode( $attr ) {
 
 				$output_buffer .='
 				<figure class="msnry_item" itemscope itemtype="http://schema.org/ImageObject">
-					<a href="'. $full[0] .'" itemprop="contentUrl" data-size="'.$full[1].'x'.$full[2].'" data-caption="'. $image_caption .'" >
-				        <img src="'. $thumb[0] .'" itemprop="thumbnail" alt="'.$image_alttext.'"  />
+					<a href="'. $full[0] .'" itemprop="contentUrl" data-size="'.$full[1].'x'.$full[2].'" data-caption="'. $image_caption .'" style="height: ' . ($options['thumbnail_width'] - 10)/$thumb[1]*$thumb[2] . 'px;">
+				        <img class="msnry_thumb" src="'. $thumb[0] .'" itemprop="thumbnail" alt="'.$image_alttext.'"  />
 				    </a>
 				    <figcaption class="photoswipe-gallery-caption" >'. $image_caption .'</figcaption>
 			    </figure>
@@ -491,8 +491,9 @@ function photoswipe_shortcode( $attr ) {
 						new Masonry( container_".$post_id.", {
 						  // options...
 						  itemSelector: '.msnry_item',
-						  //columnWidth: ".$options['thumbnail_width'].",
-						  isFitWidth: true
+						  columnWidth: ".$options['thumbnail_width'].",
+						  fitWidth: true,
+						  resize: true
 						});
 						(container_".$post_id.").className += ' photoswipe_showme';";
 				}
