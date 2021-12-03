@@ -6,7 +6,7 @@ Description: This is a image gallery plugin for WordPress built using PhotoSwipe
 <a href="http://photoswipe.com/">PhotoSwipe</a>
 Author: Web Design Gold Coast
 Author URI: http://thriveweb.com.au/
-Version: 1.2.12
+Version: 1.2.13
 Text Domain: photoswipe-masonry
 */
 
@@ -67,11 +67,11 @@ class photoswipe_plugin_options {
 
 			$options = photoswipe_plugin_options::pSwipe_getOptions();
 
-			$options['thumbnail_width'] = stripslashes($_POST['thumbnail_width']);
-			$options['thumbnail_height'] = stripslashes($_POST['thumbnail_height']);
+			$options['thumbnail_width'] = (int)stripslashes($_POST['thumbnail_width']);
+			$options['thumbnail_height'] = (int)stripslashes($_POST['thumbnail_height']);
 
-			$options['max_image_width'] = stripslashes($_POST['max_image_width']);
-			$options['max_image_height'] = stripslashes($_POST['max_image_height']);
+			$options['max_image_width'] = (int)stripslashes($_POST['max_image_width']);
+			$options['max_image_height'] = (int)stripslashes($_POST['max_image_height']);
 
 			if (isset($_POST['white_theme'])) {
 				$options['white_theme'] = (bool)true;
