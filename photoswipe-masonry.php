@@ -6,7 +6,7 @@ Description: This is a image gallery plugin for WordPress built using PhotoSwipe
 <a href="http://photoswipe.com/">PhotoSwipe</a>
 Author: Web Design Gold Coast
 Author URI: http://thriveweb.com.au/
-Version: 1.2.14
+Version: 1.2.15
 Text Domain: photoswipe-masonry
 */
 
@@ -35,7 +35,7 @@ class photoswipe_plugin_options {
 
 	public $plugin_name;
 
-	public function __construct() {		
+	public function __construct() {
 		$this->plugin_name = 'photoswipe-masonry';
 	}
 
@@ -80,16 +80,16 @@ class photoswipe_plugin_options {
 		add_shortcode( 'gallery',  array($this,'photoswipe_shortcode') );
 		add_shortcode( 'photoswipe',  array($this,'photoswipe_shortcode') );
 		add_action( 'save_post', array($this,'photoswipe_save_post'), 10, 3 );
-		
+
 	}
 
-	// add allowed attributes 
+	// add allowed attributes
 	public function photoswipe_kses_allow_attributes() {
 		global $allowedposttags;
 		$allowedposttags['a']['data-size'] = array();
 	}
-	
-	// add photoswipe submenu page 
+
+	// add photoswipe submenu page
 	public function photoswipe_add_submenu () {
 		add_submenu_page( 'options-general.php', 'PhotoSwipe options', 'PhotoSwipe', 'edit_theme_options', basename(__FILE__), array($this, 'display'),99);
 	}
@@ -104,12 +104,12 @@ class photoswipe_plugin_options {
 		<div id="photoswipe_admin" class="wrap">
 
 			<h2>PhotoSwipe Options</h2>
-			
+
 			<p>PhotoSwipe is a image gallery plugin for WordPress built using PhotoSwipe from  Dmitry Semenov.  <a href="http://photoswipe.com/">PhotoSwipe</a></p>
 			<?php if(isset($_GET["update-status"])): ?>
 				<div class="notice notice-success is-dismissible"><p><?php _e('Settings save successfully!'); ?>.</p></div>
 			<?php endif; ?>
-			<form method="post" action="<?php echo admin_url( 'admin-post.php' ); ?>" enctype="multipart/form-data">				
+			<form method="post" action="<?php echo admin_url( 'admin-post.php' ); ?>" enctype="multipart/form-data">
 				<input type="hidden" name="action" value="update_settings"/>
 				<?php wp_nonce_field(-1,'photoswipe_admin_options_nonce_field' ); ?>
 
@@ -168,92 +168,92 @@ class photoswipe_plugin_options {
 
 		$options = get_option('photoswipe_options');
 		$photoswipe_wp_plugin_path =  plugins_url() . '/photoswipe-masonry' ;
-	
+
 		wp_enqueue_style( 'photoswipe-core-css',	$photoswipe_wp_plugin_path . '/photoswipe-dist/photoswipe.css');
-	
-	
+
+
 		// Skin CSS file (optional)
 		// In folder of skin CSS file there are also:
 		// - .png and .svg icons sprite,
 		// - preloader.gif (for browsers that do not support CSS animations)
 		if($options['white_theme']) wp_enqueue_style( 'white_theme', $photoswipe_wp_plugin_path . '/photoswipe-dist/white-skin/skin.css'  );
 		else wp_enqueue_style( 'pswp-skin', $photoswipe_wp_plugin_path . '/photoswipe-dist/default-skin/default-skin.css'  );
-	
+
 		// register inline css for shortcode
 		wp_register_style( 'photoswipe-masonry-inline', $photoswipe_wp_plugin_path.'/photoswipe-masonry-inline.css' );
-	
+
 		wp_enqueue_script('jquery');
-	
+
 		//Core JS file
 		wp_enqueue_script( 'photoswipe', 			$photoswipe_wp_plugin_path . '/photoswipe-dist/photoswipe.min.js');
-	
+
 		wp_enqueue_script( 'photoswipe-masonry-js', $photoswipe_wp_plugin_path . '/photoswipe-masonry.js');
-	
+
 		//UI JS file
 		wp_enqueue_script( 'photoswipe-ui-default', $photoswipe_wp_plugin_path . '/photoswipe-dist/photoswipe-ui-default.min.js');
-	
+
 		//Masonry - re-named to move to header
 		wp_enqueue_script( 'photoswipe-masonry', 	$photoswipe_wp_plugin_path . '/masonry.pkgd.min.js','','',false);
 		//imagesloaded
 		wp_enqueue_script( 'photoswipe-imagesloaded', 			$photoswipe_wp_plugin_path . '/imagesloaded.pkgd.min.js');
-	
-		// register inline js for the shortcode only	
+
+		// register inline js for the shortcode only
 		wp_register_script( 'photoswipe-masonry-js-inline', $photoswipe_wp_plugin_path .'/photoswipe-masonry-inline.js' );
 
 		// enqueing inline js
-		wp_enqueue_script( 'photoswipe-masonry-js-inline', $photoswipe_wp_plugin_path .'/photoswipe-masonry-inline.js' );	
-		
-	
+		wp_enqueue_script( 'photoswipe-masonry-js-inline', $photoswipe_wp_plugin_path .'/photoswipe-masonry-inline.js' );
+
+
 	}
 
 	// update & save the admin form settings
 	public function photoswipe_update_settings() {
 		$status = 'false';
-		if(isset($_POST['photoswipe_save']) && 
+		if(isset($_POST['photoswipe_save']) &&
 			( isset ($_POST['action']) == "update_settings") &&
 			( isset( $_POST['photoswipe_admin_options_nonce_field'] ) &&
-				wp_verify_nonce( $_POST['photoswipe_admin_options_nonce_field'] ) && 
+				wp_verify_nonce( $_POST['photoswipe_admin_options_nonce_field'] ) &&
 				current_user_can('manage_options')
 			)
 		) {
 			$options = photoswipe_plugin_options::pSwipe_getOptions();
-		
+
 			$options['thumbnail_width'] = (int)stripslashes($_POST['thumbnail_width']);
 			$options['thumbnail_height'] = (int)stripslashes($_POST['thumbnail_height']);
-		
+
 			$options['max_image_width'] = (int)stripslashes($_POST['max_image_width']);
 			$options['max_image_height'] = (int)stripslashes($_POST['max_image_height']);
-		
+
 			if (isset($_POST['white_theme'])) {
 				$options['white_theme'] = (bool)true;
 			} else {
 				$options['white_theme'] = (bool)false;
 			}
-		
+
 			if (isset($_POST['show_controls'])) {
 				$options['show_controls'] = (bool)true;
 			} else {
 				$options['show_controls'] = (bool)false;
 			}
-		
+
 			if (isset($_POST['show_captions'])) {
 				$options['show_captions'] = (bool)true;
 			} else {
 				$options['show_captions'] = (bool)false;
 			}
-		
+
 			if (isset($_POST['use_masonry'])) {
 				$options['use_masonry'] = (bool)true;
 			} else {
 				$options['use_masonry'] = (bool)false;
 			}
-		
+
 			$response = update_option('photoswipe_options', $options);
 			if($response):
 				$status = 'true';
 			endif;
 
-			
+
 		} else {
 			photoswipe_plugin_options::pSwipe_getOptions();
 		}
@@ -282,7 +282,7 @@ class photoswipe_plugin_options {
 
 		global $post;
 		global $photoswipe_count;
-		
+
 		// enqueing inline css & js
 		wp_enqueue_style('photoswipe-masonry-inline');
 		wp_enqueue_script('photoswipe-masonry-js-inline');
@@ -334,14 +334,14 @@ class photoswipe_plugin_options {
 			$columns = intval($args['columns']);
 			$itemwidth = $columns > 0 ? floor(100/$columns) : 100;
 
-			
+
 			$size_class = sanitize_html_class( $args['size'] );
 			ob_start();
 			?>
 			<div style="clear:both"></div>
 			<div class="psgal_wrap">
 			<div id="<?php esc_attr_e('psgal_'.$post_id);?>" data-psgal_id="<?php esc_attr_e($post_id); ?>" data-psgal_container_id="<?php esc_attr_e('container_'.$post_id); ?>" data-psgal_thumbnail_width="<?php esc_attr_e('width:'.$options['thumbnail_width'].'px'); ?>" data-psgal_use_masonary="<?php echo ($options['use_masonry']) ? $options['use_masonry'] : 0; ?>" class="<?php esc_attr_e('psgal gallery-columns-'.$columns.' gallery-size-'.$size_class.' use_masonry_'.$options['use_masonry'].' show_captions_'.$options['show_captions']); ?>" itemscope itemtype="http://schema.org/ImageGallery" >
-			<?php 
+			<?php
 
 			if ( !empty($attachments) ) {
 				foreach ( $attachments as $aid => $attachment ) {
@@ -357,7 +357,7 @@ class photoswipe_plugin_options {
 					$image_caption = $_post->post_excerpt;
 					$image_description = $_post->post_content;
 					$calculated_width = ($options['thumbnail_width'] - 10)/$thumb[1]*$thumb[2];
-					
+
 					?>
 					<figure class="msnry_item" itemscope itemtype="http://schema.org/ImageObject" style="<?php esc_attr_e('width:'.$options['thumbnail_width'].'px'); ?>">
 						<a href="<?php esc_attr_e($full[0]); ?>" itemprop="contentUrl" data-size="<?php esc_attr_e($full[1].'x'.$full[2]); ?>" data-caption="<?php esc_attr_e($image_caption); ?>" style="<?php esc_attr_e("height:".($calculated_width) ."px"); ?>">
@@ -369,14 +369,14 @@ class photoswipe_plugin_options {
 
 				}
 			}
-			
+
 			?>
 			</div></div>
 			<div style='clear:both'></div>
 			<?php
 			return ob_get_clean();
 	}
-	
+
 	// insert the pswp block in the footer
 	public function photoswipe_footer() {
 		ob_start();
@@ -446,7 +446,7 @@ class photoswipe_plugin_options {
 				</div>
 
 			</div>
-		<?PHP 
+		<?PHP
 
 		return	ob_end_flush();
 	}
@@ -530,7 +530,7 @@ class photoswipe_plugin_options {
 		// Returns null if no attachment is found
 		return $attachment[0];
 	}
-	
+
 }
 
 // object creation of the photoswipe_plugin_options class and call to the init() method of the constructor
