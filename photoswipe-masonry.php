@@ -197,6 +197,12 @@ class photoswipe_plugin_options {
 		//imagesloaded
 		wp_enqueue_script( 'photoswipe-imagesloaded', 			$photoswipe_wp_plugin_path . '/imagesloaded.pkgd.min.js');
 
+		// Enqueue the thumbnail helper script.
+		wp_enqueue_script(
+			'photoswipe-masonry-js-thumbnail-helper',
+			$photoswipe_wp_plugin_path .'/helpers/thumbnail-helper.js'
+		);
+
 		// register inline js for the shortcode only
 		wp_register_script( 'photoswipe-masonry-js-inline', $photoswipe_wp_plugin_path .'/photoswipe-masonry-inline.js' );
 
