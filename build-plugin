@@ -1,0 +1,19 @@
+#! env /usr/bin/bash
+
+set -e
+
+archive_name='./photoswipe-masonry.zip'
+
+if [ -f $archive_name ]; then
+  echo "Removing $archive_name"
+  rm $archive_name
+fi
+
+if command -v 7z; then
+  echo 'Creating the plugin zip file...'
+
+  7z a -sse -mx9 $archive_name './helpers' './photoswipe-dist' './admin.css' './imagesloaded.pkgd.min.js' './masonry.pkgd.min.js' './photoswipe-masonry-inline.css' './photoswipe-masonry-inline.js' './photoswipe-masonry.js' './photoswipe-masonry.php' './readme.txt'
+else
+  echo 'Build requires 7z to be installed. Exiting...'
+  exit 1
+fi
