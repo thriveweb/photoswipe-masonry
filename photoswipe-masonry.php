@@ -41,30 +41,30 @@ class photoswipe_plugin_options {
 
 	// defaults
 	public static function pSwipe_getOptions() {
+		if(current_user_can('manage_options')):
+			//Pull from WP options database table
+			$options = get_option('photoswipe_options');
 
-		//Pull from WP options database table
-		$options = get_option('photoswipe_options');
+			if (!is_array($options)) {
 
+				$options['show_controls'] = false;
 
-		if (!is_array($options)) {
+				$options['show_captions'] = true;
 
-			$options['show_controls'] = false;
+				$options['use_masonry'] = false;
 
-			$options['show_captions'] = true;
+				$options['thumbnail_width'] = 150;
+				$options['thumbnail_height'] = 150;
 
-			$options['use_masonry'] = false;
+				$options['max_image_height'] = '2400';
+				$options['max_image_width'] = '1800';
 
-			$options['thumbnail_width'] = 150;
-			$options['thumbnail_height'] = 150;
-
-			$options['max_image_height'] = '2400';
-			$options['max_image_width'] = '1800';
-
-			$options['white_theme'] = false;
-			update_option('photoswipe_options', $options);
-		}
-		$options['text_domain'] = 'photoswipe-masonry';
-		return $options;
+				$options['white_theme'] = false;
+				update_option('photoswipe_options', $options);
+			}
+			$options['text_domain'] = 'photoswipe-masonry';
+			return $options;
+		endif;
 	}
 
 	// initialize the required hooks & fiters
