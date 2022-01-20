@@ -1,0 +1,4 @@
+---
+spec: ./test/**/*.spec.js
+color: true
+reporter: spec
