@@ -107,7 +107,11 @@ class photoswipe_plugin_options
 
 		$options = photoswipe_plugin_options::pSwipe_getOptions();
 		$text_domain = $options['text_domain'];
+<<<<<<< HEAD
 ?>
+=======
+	?>
+>>>>>>> 5bf91d1a7f15264042d694dc38932cf17e695490
 
 		<div id="photoswipe_admin" class="wrap">
 
@@ -193,7 +197,10 @@ class photoswipe_plugin_options
 
 		// register inline css for shortcode
 		wp_register_style('photoswipe-masonry-inline', $photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.css');
+<<<<<<< HEAD
 		// wp_enqueue_style('photoswipe-masonry-inline', $photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.css');
+=======
+>>>>>>> 5bf91d1a7f15264042d694dc38932cf17e695490
 
 		wp_enqueue_script('jquery');
 
@@ -214,7 +221,11 @@ class photoswipe_plugin_options
 		wp_register_script('photoswipe-masonry-js-inline', $photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.js');
 
 		// enqueing inline js
+<<<<<<< HEAD
 		// wp_enqueue_script('photoswipe-masonry-js-inline', $photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.js');
+=======
+		wp_enqueue_script('photoswipe-masonry-js-inline', $photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.js');
+>>>>>>> 5bf91d1a7f15264042d694dc38932cf17e695490
 	}
 
 	// update & save the admin form settings
@@ -295,7 +306,11 @@ class photoswipe_plugin_options
 		global $post;
 		global $photoswipe_count;
 
+<<<<<<< HEAD
 		// enqueing inline css 
+=======
+		// enqueing inline css & js
+>>>>>>> 5bf91d1a7f15264042d694dc38932cf17e695490
 		wp_enqueue_style('photoswipe-masonry-inline');
 
 
@@ -348,7 +363,11 @@ class photoswipe_plugin_options
 	?>
 		<div style="clear:both"></div>
 		<div class="psgal_wrap">
+<<<<<<< HEAD
 			<div id="<?php esc_attr_e('psgal_' . $post_id); ?>" data-psgal_id="<?php esc_attr_e($post_id); ?>" data-psgal_container_id="<?php esc_attr_e('container_' . $post_id); ?>" data-psgal_thumbnail_width="<?php esc_attr_e($options['thumbnail_width']); ?>" data-psgal_use_masonary="<?php echo (($options['use_masonry']) ? $options['use_masonry'] : 0); ?>" class="<?php esc_attr_e('psgal-inline psgal gallery-columns-' . $columns . ' gallery-size-' . $size_class . ' use_masonry_' . $options['use_masonry'] . ' show_captions_' . $options['show_captions']); ?>" itemscope itemtype="http://schema.org/ImageGallery">
+=======
+			<div id="<?php esc_attr_e('psgal_' . $post_id); ?>" data-psgal_id="<?php esc_attr_e($post_id); ?>" data-psgal_container_id="<?php esc_attr_e('container_' . $post_id); ?>" data-psgal_thumbnail_width="<?php esc_attr_e('width:' . $options['thumbnail_width'] . 'px'); ?>" data-psgal_use_masonary="<?php echo (($options['use_masonry']) ? $options['use_masonry'] : 0); ?>" class="<?php esc_attr_e('psgal gallery-columns-' . $columns . ' gallery-size-' . $size_class . ' use_masonry_' . $options['use_masonry'] . ' show_captions_' . $options['show_captions']); ?>" itemscope itemtype="http://schema.org/ImageGallery">
+>>>>>>> 5bf91d1a7f15264042d694dc38932cf17e695490
 				<?php
 
 				if (!empty($attachments)) {
@@ -367,6 +386,7 @@ class photoswipe_plugin_options
 						$calculated_width = ($options['thumbnail_width'] - 10) / $thumb[1] * $thumb[2];
 
 				?>
+<<<<<<< HEAD
 						<figure class="msnry_items" itemscope itemtype="http://schema.org/ImageObject" style="<?php esc_attr_e('width:' . $options['thumbnail_width'] . 'px;'); ?>">
 							<a href="<?php esc_attr_e($full[0]); ?>" itemprop="contentUrl" data-size="<?php esc_attr_e($full[1] . 'x' . $full[2]); ?>" data-caption="<?php esc_attr_e($image_caption); ?>" style="<?php esc_attr_e("height:" . (($options['thumbnail_width'] - 10) / $thumb[1] * $thumb[2]) . "px;"); ?>">
 								<img class="msnry_thumb" src="<?php esc_attr_e($thumb[0]); ?>" itemprop="thumbnail" alt="<?php esc_attr_e($image_alttext); ?>" />
@@ -383,6 +403,18 @@ class photoswipe_plugin_options
 						</figure>
 				<?php
 
+=======
+						<figure class="msnry_item" itemscope itemtype="http://schema.org/ImageObject" style="<?php esc_attr_e('width:' . $options['thumbnail_width'] . 'px'); ?>">
+							<a href="<?php esc_attr_e($full[0]); ?>" itemprop="contentUrl" data-size="<?php esc_attr_e($full[1] . 'x' . $full[2]); ?>" data-caption="<?php esc_attr_e($image_caption); ?>" style="<?php esc_attr_e("height:" . ($calculated_width) . "px"); ?>">
+								<img class="msnry_thumb" src="<?php esc_attr_e($thumb[0]); ?>" itemprop="thumbnail" alt="<?php esc_attr_e($image_alttext); ?>" />
+							</a>
+							<?php if ($options['show_captions']) : ?>
+								<figcaption class="photoswipe-gallery-caption"><?php esc_attr_e($image_caption); ?></figcaption>
+							<?php endif; ?>
+						</figure>
+				<?php
+
+>>>>>>> 5bf91d1a7f15264042d694dc38932cf17e695490
 					}
 				}
 
@@ -390,9 +422,13 @@ class photoswipe_plugin_options
 			</div>
 		</div>
 		<div style='clear:both'></div>
+<<<<<<< HEAD
 <?php
 		// enqueing inline js 
 		wp_enqueue_script('photoswipe-masonry-js-inline');
+=======
+	<?php
+>>>>>>> 5bf91d1a7f15264042d694dc38932cf17e695490
 		$output_string = ob_get_contents();
 		ob_end_clean();
 		return $output_string;
@@ -520,4 +556,7 @@ function run_photoswipe()
 
 // function call of the run_photoswipe
 run_photoswipe();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5bf91d1a7f15264042d694dc38932cf17e695490
