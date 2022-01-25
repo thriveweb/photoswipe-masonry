@@ -401,7 +401,7 @@ class photoswipe_plugin_options
 	public function photoswipe_footer()
 	{
 		ob_start();
-		include dirname(__FILE__) . '\photoswipe-masonry-footer-html.php';
+		include dirname(__FILE__) . '/photoswipe-masonry-footer-html.php';
 		return ob_end_flush();
 	}
 
