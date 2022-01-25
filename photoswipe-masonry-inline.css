@@ -8,15 +8,15 @@
     transition: all 0.4s ease;
     opacity:0.1;
 }
-.psgal.use_masonry_ {
+.psgal.use_masonry_{
     opacity:1;
 }
 
-.psgal.use_masonry_1 {
+.psgal.use_masonry_1{
     opacity:1; 
     text-align:center;
 }
-.psgal.photoswipe_showme {
+.psgal.photoswipe_showme{
     opacity:1;
 }
 .psgal figure {
@@ -33,20 +33,20 @@
 .psgal a{
     display:block;
 }
-.psgal img {
+.psgal img{
     margin:auto;
     max-width:100%;
     width: auto;
     height: auto;
     border: 0;
 }
-.psgal figure figcaption {
+.psgal figure figcaption{
     font-size:13px;
 }
 .msnry{
     margin:auto;
 }
-.pswp__caption__center {
+.pswp__caption__center{
     text-align: center;
 }
 .psgal.show_captions_ figure.photoswipe-gallery-caption {
