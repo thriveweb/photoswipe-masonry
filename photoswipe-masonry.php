@@ -38,17 +38,11 @@ class photoswipe_plugin_options
 
 	public function __construct()
 	{
-
 		$this->plugin_name = 'photoswipe-masonry';
-	}
 
-	// defaults
-	public static function pSwipe_getOptions()
-	{
-
-		//Pull from WP options database table
 		$options = get_option('photoswipe_options');
 
+		// set defaults
 		if (!is_array($options)) {
 
 			$options['show_controls'] = false;
@@ -66,12 +60,9 @@ class photoswipe_plugin_options
 			$options['white_theme'] = false;
 			update_option('photoswipe_options', $options);
 		}
-		$options['text_domain'] = 'photoswipe-masonry';
-		return $options;
 	}
 
 	// initialize the required hooks & fiters
-
 	public function init()
 	{
 		add_action('init', array($this, 'photoswipe_kses_allow_attributes'));
@@ -115,11 +106,11 @@ class photoswipe_plugin_options
 			<h2>PhotoSwipe Options</h2>
 
 			<p>PhotoSwipe is a image gallery plugin for WordPress built using PhotoSwipe from Dmitry Semenov. <a href="http://photoswipe.com/">PhotoSwipe</a></p>
-			<?php if ($_GET["update-status"] == "true") : ?>
+			<?php if (isset($_GET["update-status"]) && $_GET["update-status"] == "true") : ?>
 				<div class="notice notice-success is-dismissible">
 					<p><?php _e('Settings save successfully!'); ?>.</p>
 				</div>
-			<?php elseif ($_GET["update-status"] == "false") : ?>
+			<?php elseif (isset($_GET["update-status"]) && $_GET["update-status"] == "false") : ?>
 				<div class="notice notice-error is-dismissible">
 					<p><?php _e('These is some trouble in saving the data, please check later!'); ?>.</p>
 				</div>
