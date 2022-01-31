@@ -36,7 +36,8 @@ class photoswipe_plugin_options
 
 	public $plugin_name;
 
-	public function __construct() {
+	public function __construct()
+	{
 
 		$this->plugin_name = 'photoswipe-masonry';
 	}
@@ -44,30 +45,29 @@ class photoswipe_plugin_options
 	// defaults
 	public static function pSwipe_getOptions()
 	{
-		if (current_user_can('manage_options')) :
-			//Pull from WP options database table
-			$options = get_option('photoswipe_options');
 
-			if (!is_array($options)) {
+		//Pull from WP options database table
+		$options = get_option('photoswipe_options');
 
-				$options['show_controls'] = false;
+		if (!is_array($options)) {
 
-				$options['show_captions'] = true;
+			$options['show_controls'] = false;
 
-				$options['use_masonry'] = false;
+			$options['show_captions'] = true;
 
-				$options['thumbnail_width'] = 150;
-				$options['thumbnail_height'] = 150;
+			$options['use_masonry'] = false;
 
-				$options['max_image_height'] = '2400';
-				$options['max_image_width'] = '1800';
+			$options['thumbnail_width'] = 150;
+			$options['thumbnail_height'] = 150;
 
-				$options['white_theme'] = false;
-				update_option('photoswipe_options', $options);
-			}
-			$options['text_domain'] = 'photoswipe-masonry';
-			return $options;
-		endif;
+			$options['max_image_height'] = '2400';
+			$options['max_image_width'] = '1800';
+
+			$options['white_theme'] = false;
+			update_option('photoswipe_options', $options);
+		}
+		$options['text_domain'] = 'photoswipe-masonry';
+		return $options;
 	}
 
 	// initialize the required hooks & fiters
@@ -88,9 +88,10 @@ class photoswipe_plugin_options
 		add_filter('plugin_action_links_photoswipe-masonry' . '/photoswipe-masonry.php', array($this, 'photoswipe_settings_link'), 10, 1);
 		add_action('post_updated', array($this, 'photoswipe_update_post'), 10, 3);
 	}
-  
+
 	// add allowed attributes
-	public function photoswipe_kses_allow_attributes() {
+	public function photoswipe_kses_allow_attributes()
+	{
 
 		global $allowedposttags;
 		$allowedposttags['a']['data-size'] = array();
@@ -100,26 +101,27 @@ class photoswipe_plugin_options
 	// add photoswipe submenu page 
 	public function photoswipe_add_submenu()
 	{
-		add_submenu_page( 'options-general.php', 'PhotoSwipe options', 'PhotoSwipe', 'edit_theme_options', basename(__FILE__), array($this, 'display'),99);
-
+		add_submenu_page('options-general.php', 'PhotoSwipe options', 'PhotoSwipe', 'edit_theme_options', basename(__FILE__), array($this, 'display'), 99);
 	}
 
 	// admin settings form of the plugin
 	public static function display()
-{
-
-		$options = photoswipe_plugin_options::pSwipe_getOptions();
-		$text_domain = $options['text_domain'];
+	{
+		$options = get_option('photoswipe_options');
+		$text_domain = 'photoswipe-masonry';
 ?>
-
 		<div id="photoswipe_admin" class="wrap">
 
 			<h2>PhotoSwipe Options</h2>
 
 			<p>PhotoSwipe is a image gallery plugin for WordPress built using PhotoSwipe from Dmitry Semenov. <a href="http://photoswipe.com/">PhotoSwipe</a></p>
-			<?php if (isset($_GET["update-status"])) : ?>
+			<?php if ($_GET["update-status"] == "true") : ?>
 				<div class="notice notice-success is-dismissible">
 					<p><?php _e('Settings save successfully!'); ?>.</p>
+				</div>
+			<?php elseif ($_GET["update-status"] == "false") : ?>
+				<div class="notice notice-error is-dismissible">
+					<p><?php _e('These is some trouble in saving the data, please check later!'); ?>.</p>
 				</div>
 			<?php endif; ?>
 			<form method="post" action="<?php echo admin_url('admin-post.php'); ?>" enctype="multipart/form-data">
@@ -180,7 +182,7 @@ class photoswipe_plugin_options
 	// enqueue all CSS & JS
 	public function photoswipe_scripts_method()
 	{
-    $options = get_option('photoswipe_options');
+		$options = get_option('photoswipe_options');
 		$photoswipe_wp_plugin_path =  plugins_url() . '/photoswipe-masonry';
 
 		wp_enqueue_style('photoswipe-core-css',	$photoswipe_wp_plugin_path . '/photoswipe-dist/photoswipe.css');
@@ -228,7 +230,7 @@ class photoswipe_plugin_options
 				current_user_can('manage_options')
 			)
 		) {
-			$options = photoswipe_plugin_options::pSwipe_getOptions();
+			$options = get_option('photoswipe_options');
 
 			$options['thumbnail_width'] = (int)stripslashes($_POST['thumbnail_width']);
 			$options['thumbnail_height'] = (int)stripslashes($_POST['thumbnail_height']);
@@ -265,7 +267,7 @@ class photoswipe_plugin_options
 				$status = 'true';
 			endif;
 		} else {
-			photoswipe_plugin_options::pSwipe_getOptions();
+			$status = 'false';
 		}
 
 		wp_redirect(admin_url('options-general.php?page=photoswipe-masonry.php&update-status=' . $status));
