@@ -370,7 +370,7 @@ class photoswipe_plugin_options
 								$caption_style = " ";
 							endif;
 							?>
-							<figcaption class="photoswipe-gallery-caption" style="<?php esc_attr_e($caption_style); ?>"><?php esc_attr_e($image_caption); ?></figcaption>
+							<figcaption class="photoswipe-gallery-caption" style="<?php esc_attr_e($caption_style); ?>"><?php echo wp_kses_post($image_caption); ?></figcaption>
 
 						</figure>
 				<?php
