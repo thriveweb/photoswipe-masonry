@@ -36,7 +36,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["chai", "npm:4.3.4"],
-            ["mocha", "npm:9.1.4"]
+            ["masonry-layout", "npm:4.2.2"],
+            ["mocha", "npm:9.1.4"],
+            ["photoswipe", "npm:4.1.3"]
           ],
           "linkType": "SOFT",
         }]
@@ -502,6 +504,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["desandro-matches-selector", [
+        ["npm:2.0.2", {
+          "packageLocation": "./.yarn/cache/desandro-matches-selector-npm-2.0.2-a090716f80-30979e6b45.zip/node_modules/desandro-matches-selector/",
+          "packageDependencies": [
+            ["desandro-matches-selector", "npm:2.0.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["diff", [
         ["npm:5.0.0", {
           "packageLocation": "./.yarn/cache/diff-npm-5.0.0-ad6900db18-f19fe29284.zip/node_modules/diff/",
@@ -566,6 +577,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["ev-emitter", [
+        ["npm:1.1.1", {
+          "packageLocation": "./.yarn/cache/ev-emitter-npm-1.1.1-2ff3287350-3dd78a7620.zip/node_modules/ev-emitter/",
+          "packageDependencies": [
+            ["ev-emitter", "npm:1.1.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["fill-range", [
         ["npm:7.0.1", {
           "packageLocation": "./.yarn/cache/fill-range-npm-7.0.1-b8b1817caa-cc283f4e65.zip/node_modules/fill-range/",
@@ -583,6 +603,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["find-up", "npm:5.0.0"],
             ["locate-path", "npm:6.0.0"],
             ["path-exists", "npm:4.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["fizzy-ui-utils", [
+        ["npm:2.0.7", {
+          "packageLocation": "./.yarn/cache/fizzy-ui-utils-npm-2.0.7-9aeef3d5b1-001e54effa.zip/node_modules/fizzy-ui-utils/",
+          "packageDependencies": [
+            ["fizzy-ui-utils", "npm:2.0.7"],
+            ["desandro-matches-selector", "npm:2.0.2"]
           ],
           "linkType": "HARD",
         }]
@@ -657,6 +687,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/get-func-name-npm-2.0.0-afbf363765-8d82e69f3e.zip/node_modules/get-func-name/",
           "packageDependencies": [
             ["get-func-name", "npm:2.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["get-size", [
+        ["npm:2.0.3", {
+          "packageLocation": "./.yarn/cache/get-size-npm-2.0.3-79d8722c4b-18d5a5fdb3.zip/node_modules/get-size/",
+          "packageDependencies": [
+            ["get-size", "npm:2.0.3"]
           ],
           "linkType": "HARD",
         }]
@@ -1001,6 +1040,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["masonry-layout", [
+        ["npm:4.2.2", {
+          "packageLocation": "./.yarn/cache/masonry-layout-npm-4.2.2-f673d321c7-b947029b8f.zip/node_modules/masonry-layout/",
+          "packageDependencies": [
+            ["masonry-layout", "npm:4.2.2"],
+            ["get-size", "npm:2.0.3"],
+            ["outlayer", "npm:2.1.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["minimatch", [
         ["npm:3.0.4", {
           "packageLocation": "./.yarn/cache/minimatch-npm-3.0.4-6e76f51c23-66ac295f8a.zip/node_modules/minimatch/",
@@ -1222,6 +1272,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["outlayer", [
+        ["npm:2.1.1", {
+          "packageLocation": "./.yarn/cache/outlayer-npm-2.1.1-1fe872efd0-a8b69d07ba.zip/node_modules/outlayer/",
+          "packageDependencies": [
+            ["outlayer", "npm:2.1.1"],
+            ["ev-emitter", "npm:1.1.1"],
+            ["fizzy-ui-utils", "npm:2.0.7"],
+            ["get-size", "npm:2.0.3"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["p-limit", [
         ["npm:3.1.0", {
           "packageLocation": "./.yarn/cache/p-limit-npm-3.1.0-05d2ede37f-7c3690c4db.zip/node_modules/p-limit/",
@@ -1275,6 +1337,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/pathval-npm-1.1.1-ce0311d7e0-090e314771.zip/node_modules/pathval/",
           "packageDependencies": [
             ["pathval", "npm:1.1.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["photoswipe", [
+        ["npm:4.1.3", {
+          "packageLocation": "./.yarn/cache/photoswipe-npm-4.1.3-4064ec7bd1-2eecc188d8.zip/node_modules/photoswipe/",
+          "packageDependencies": [
+            ["photoswipe", "npm:4.1.3"]
           ],
           "linkType": "HARD",
         }]
@@ -1387,7 +1458,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["root-workspace-0b6124", "workspace:."],
             ["chai", "npm:4.3.4"],
-            ["mocha", "npm:9.1.4"]
+            ["masonry-layout", "npm:4.2.2"],
+            ["mocha", "npm:9.1.4"],
+            ["photoswipe", "npm:4.1.3"]
           ],
           "linkType": "SOFT",
         }]
