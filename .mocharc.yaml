@@ -1,4 +1,4 @@
 ---
-spec: ./test/**/*.spec.js
+spec: ./client/test/**/*.spec.js
 color: true
 reporter: spec
