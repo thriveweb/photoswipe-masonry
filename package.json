@@ -5,6 +5,7 @@
     "mocha": "^9.1.4"
   },
   "dependencies": {
+    "imagesloaded": "^5.0.0",
     "masonry-layout": "^4.2.2",
     "photoswipe": "^4.1.3"
   }
