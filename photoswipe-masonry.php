@@ -283,6 +283,14 @@ class photoswipe_plugin_options {
 		return $link;
 	}
 
+	public function image_figure_caption($image_caption)
+	{
+		return sprintf(
+			'<figcaption class="photoswipe-gallery-caption">%s</figcaption>',
+			esc_attr_e($image_caption)
+		);
+	}
+
 	// definition of  photoswipe shortcode
 	public function photoswipe_shortcode( $attr ) {
 
@@ -294,6 +302,9 @@ class photoswipe_plugin_options {
 		wp_enqueue_script('photoswipe-masonry-js-inline');
 
 		$options = get_option('photoswipe_options');
+
+		// Temporarily disable the figure captions until a setting is added.
+		$use_figure_caption = false;
 
 		if ( ! empty( $attr['ids'] ) ) {
 			// 'ids' is explicitly ordered, unless you specify otherwise.
@@ -369,7 +380,16 @@ class photoswipe_plugin_options {
 						<a href="<?php esc_attr_e($full[0]); ?>" itemprop="contentUrl" data-size="<?php esc_attr_e($full[1].'x'.$full[2]); ?>" data-caption="<?php esc_attr_e($image_caption); ?>" style="<?php esc_attr_e("height:".($calculated_width) ."px"); ?>">
 							<img class="msnry_thumb" src="<?php esc_attr_e($thumb[0]); ?>" itemprop="thumbnail" alt="<?php esc_attr_e($image_alttext); ?>"  />
 						</a>
-						<figcaption class="photoswipe-gallery-caption" ><?php esc_attr_e($image_caption); ?></figcaption>
+
+						<?php
+							if ($use_figure_caption)
+							{
+						 		return $this->image_figure_caption(
+						 			$image_caption
+						 		);
+							}
+						?>
+
 					</figure>
 					<?php
 
