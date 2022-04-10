@@ -1,8 +1,6 @@
 # Phasonry
 
-[![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/jedburke/phasonry?include_prereleases)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/jedburke/phasonry?include_prereleases)
 
 A fork of the excellent Photoswipe Masonry Gallery WordPress plugin by Web Design Gold Coast.
 
@@ -33,7 +31,7 @@ While the original is still somewhat maintained, this fork's goals are as follow
 + Explicitly use semantic versioning
 + Provide pre-built zip releases for each published version
 
-The plugin will be uploaded to the WordPress Plugin Repository once it's stable. Please refer to the [releases](/) page for pre-built zip files that you may upload.
+The plugin will be uploaded to the WordPress Plugin Repository once it's stable. Please refer to the [releases](/releases) page for pre-built zip files that you may upload.
 
 Consider the following JS style guides
  https://standardjs.com/rules.html
