@@ -2,7 +2,7 @@
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/jedburke/phasonry?include_prereleases)
 
-A fork of the excellent Photoswipe Masonry Gallery WordPress plugin by Web Design Gold Coast.
+A fork of the excellent [Photoswipe Masonry Gallery](https://github.com/thriveweb/photoswipe-masonry) WordPress plugin by Web Design Gold Coast.
 
 A recent botched update (v1.2.15) caused it to stop working on a high-priority website. The creation of this fork was lead by the apparent unwillingness to accept nor communicate about a pull request that corrects the issue.
 
