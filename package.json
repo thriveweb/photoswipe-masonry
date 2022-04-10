@@ -6,6 +6,7 @@
     "IE 11"
   ],
   "devDependencies": {
+    "@jscpd/finder": "^3.4.5",
     "autoprefixer": "^10.4.2",
     "chai": "^4.3.4",
     "css-loader": "^6.6.0",
@@ -14,8 +15,10 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-webpack-plugin": "^3.1.1",
+    "jscpd": "^3.4.5",
     "mini-css-extract-plugin": "^2.5.3",
-    "mocha": "^9.1.4",
+    "mocha": "^9.2.1",
+    "mocha-loader": "^5.1.5",
     "postcss": "^8.4.7",
     "postcss-loader": "^6.2.1",
     "sass": "^1.49.9",
@@ -25,6 +28,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "eslint-import-resolver-node": "^0.3.6",
     "imagesloaded": "^5.0.0",
     "masonry-layout": "^4.2.2",
     "photoswipe": "^4.1.3"

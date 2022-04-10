@@ -1,12 +1,12 @@
-[![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/jedburke/photoswipe-masonry?include_prereleases)
-
 # Phasonry
 
-A fork of the excellent [Photoswipe Masonry Gallery](/) WordPress plugin by Web Design Gold Coast.
+[![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-A recent botched update (v1.2.15) caused it to stop working on a high-priority website. This fork's creation was lead to the apparent lack of testing and unwillingness to accept or communicate about a pull request that corrects the issue.
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/jedburke/phasonry?include_prereleases)
+
+A fork of the excellent Photoswipe Masonry Gallery WordPress plugin by Web Design Gold Coast.
+
+A recent botched update (v1.2.15) caused it to stop working on a high-priority website. The creation of this fork was lead by the apparent unwillingness to accept nor communicate about a pull request that corrects the issue.
 
 ## At a Glance
 
@@ -52,7 +52,7 @@ Phasonry v1.x is a drop-in replacement for Photoswipe Masonry Gallery. The class
 + v1.12.16 contains the aforementioned bugfix for Photoswipe Masonry Gallery
 + v1.12.15 and below refers to Photoswipe Masonry Gallery
 
-Please see the [CHANGELOG](/CHANGELOG) for more.
+Please see the [CHANGELOG](/CHANGELOG.md) for more.
 
 For security reasons, the 2.x branch of Phasonry will not support EOL versions of PHP. WordPress' own minimum requirements are of no consequence.
 

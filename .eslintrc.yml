@@ -6,4 +6,12 @@ extends:
 parserOptions:
   ecmaVersion: latest
   sourceType: module
-rules: {}
+rules:
+  no-plusplus: off
+  semi:
+    - error
+    - always
+  brace-style:
+    - error
+    - allman
+

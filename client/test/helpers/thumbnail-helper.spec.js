@@ -1,8 +1,9 @@
 const path = require('path');
 
 let sourcePath = path.join(__dirname, '../../src');
-
-const ThumbnailHelper = require(path.join(sourcePath, 'helpers/thumbnail-helper'));
+const { ThumbnailHelper } = require(
+  path.join(sourcePath, 'helpers/thumbnail-helper')
+);
 
 const { expect } = require('chai');
 

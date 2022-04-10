@@ -1,28 +1,30 @@
-// Extracts the width from the input string.
-function parseWidth(thumbWidth, defaultWidth = 150) {
-  if (typeof thumbWidth === 'number') {
-    return thumbWidth;
-  }
+class ThumbnailHelper
+{
+  // Extracts the width from the input string.
+  static parseWidth(thumbWidth, defaultWidth = 150)
+  {
+    if (typeof thumbWidth === 'number')
+    {
+      return thumbWidth;
+    }
 
-  if (typeof thumbWidth === 'string') {
-    return parseInt(
-      thumbWidth
-        .trim()
-        .replace(/width\s?:\s?(\d+)[\w%]*$/i, '$1'),
-      10,
-    );
-  }
+    if (typeof thumbWidth === 'string')
+    {
+      return parseInt(
+        thumbWidth
+          .trim()
+          .replace(/width\s?:\s?(\d+)[\w%]*$/i, '$1'),
+        10,
+      );
+    }
 
-  if (typeof defaultWidth === 'number') {
-    return defaultWidth;
-  }
+    if (typeof defaultWidth === 'number')
+    {
+      return defaultWidth;
+    }
 
-  throw new Error('Thumbnail width is neither a number or string.');
+    throw new Error('Thumbnail width is neither a number or string.');
+  }
 }
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-  module.exports.parseWidth = parseWidth;
-} else {
-  window.ThumbnailHelper = {};
-  window.ThumbnailHelper.parseWidth = parseWidth;
-}
+module.exports.ThumbnailHelper = ThumbnailHelper;
