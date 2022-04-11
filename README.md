@@ -33,12 +33,6 @@ While the original is still somewhat maintained, this fork's goals are as follow
 
 The plugin will be uploaded to the WordPress Plugin Repository once it's stable. Please refer to the [releases](https://github.com/JedBurke/Phasonry/releases) page for pre-built zip files that you may upload.
 
-Consider the following JS style guides
- https://standardjs.com/rules.html
- https://github.com/airbnb/javascript
- https://guide.meteor.com/code-style.html#javascript
-
-
 ## Replacing PhotoSwipe Masonry Gallery
 
 Phasonry uses [SemVer](https://semver.org/)
