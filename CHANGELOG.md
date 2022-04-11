@@ -1,6 +1,8 @@
+= 1.2.17 =
+* Remove figcaption on post page
 
-
-
+= 1.2.16 =
+* Fix incorrect width
 
 = 1.2.15 =
 * Security update

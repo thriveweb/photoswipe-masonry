@@ -4,7 +4,7 @@
 
 A fork of the excellent [Photoswipe Masonry Gallery](https://github.com/thriveweb/photoswipe-masonry) WordPress plugin by Web Design Gold Coast.
 
-A recent botched update (v1.2.15) caused it to stop working on a high-priority website. The creation of this fork was lead by the apparent unwillingness to accept nor communicate about a pull request that corrects the issue.
+A recent botched update (v1.2.15) caused it to stop working on a high-priority website. The creation of this fork was lead by the apparent unwillingness to acknowledge a pull request that corrects the issue.
 
 ## At a Glance
 
@@ -31,7 +31,7 @@ While the original is still somewhat maintained, this fork's goals are as follow
 + Explicitly use semantic versioning
 + Provide pre-built zip releases for each published version
 
-The plugin will be uploaded to the WordPress Plugin Repository once it's stable. Please refer to the [releases](/releases) page for pre-built zip files that you may upload.
+The plugin will be uploaded to the WordPress Plugin Repository once it's stable. Please refer to the [releases](https://github.com/JedBurke/Phasonry/releases) page for pre-built zip files that you may upload.
 
 Consider the following JS style guides
  https://standardjs.com/rules.html
@@ -43,7 +43,7 @@ Consider the following JS style guides
 
 Phasonry uses [SemVer](https://semver.org/)
 
-Phasonry v1.x is a drop-in replacement for Photoswipe Masonry Gallery. The class name and plugin name will remain the same.
+Phasonry v1.x is a drop-in replacement for Photoswipe Masonry Gallery. Until version 2.0 is released, the class name and plugin name will remain the same.
 
 + v2.0 is the official start of Phasonry with breaking changes
 + v1.12.17 removes the caption addition as a figure element in the gallery
