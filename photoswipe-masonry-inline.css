@@ -52,3 +52,13 @@
 .psgal.show_captions_ figure.photoswipe-gallery-caption {
     display:none;
 }
+@media(max-width:650px){
+    .photoswipe_showme figure{
+        width: 100% !important;
+        max-width: auto;
+        height: auto;
+    }
+    .photoswipe_showme figure a {
+        height: auto !important;
+    }
+}
