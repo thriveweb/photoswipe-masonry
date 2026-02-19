@@ -32,7 +32,7 @@ jobs:
 
       # Deploy to WordPress.org via SVN
       - name: Deploy to WordPress.org SVN
-        uses: 10up/action-wordpress-plugin-deploy@v2
+        uses: 10up/action-wordpress-plugin-deploy@v1
         with:
           svn-url: https://plugins.svn.wordpress.org/photoswipe-masonry
           svn-username: ${{ secrets.SVN_USERNAME }}
