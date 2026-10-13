@@ -2,12 +2,12 @@
 
 Contributors: deanoakley
 Author: Web Design Gold Coast
-Author URI: http://thriveweb.com.au/
-Plugin URI: http://thriveweb.com.au/the-lab/photoswipe/
+Author URI: https://thriveweb.com.au/
+Plugin URI: https://thriveweb.com.au/the-lab/photoswipe/
 Tags: photoswipe, gallery, image gallery, website gallery, photoalbum, photogallery, photo, plugin, images, slideshow, short code, responsive, native gallery
 Requires at least: 6.0
-Tested up to: 6.4
-Stable tag: 1.2.34
+Tested up to: 7.1.3
+Stable tag: 1.2.35
 
 PhotoSwipe Masonry takes advantage of the built in gallery features of WordPress. The gallery is built using PhotoSwipe from Dmitry Semenov.
 
@@ -51,6 +51,11 @@ See a [demo here](http://thriveweb.com.au/the-lab/PhotoSwipe/ "PhotoSwipeWP")
 2. Screenshot Popup layout
 
 == Changelog ==
+
+= 1.2.35 =
+* Update compatibility metadata after testing with WordPress 7.1.3 and PHP 8.4.
+* Fix a PHP deprecation warning when initialising settings on first activation.
+* Initialise masonry after the gallery markup is ready, including on block themes.
 
 = 1.2.34 =
 * Refresh the WordPress.org banners and plugin icons with abstract masonry artwork.

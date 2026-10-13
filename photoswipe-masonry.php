@@ -1,13 +1,14 @@
 <?php
 /*
 Plugin Name: Photoswipe Masonry
-Plugin URI: http://thriveweb.com.au/the-lab/photoswipe/
+Plugin URI: https://thriveweb.com.au/the-lab/photoswipe/
 Description: This is a image gallery plugin for WordPress built using PhotoSwipe from  Dmitry Semenov.
 <a href="http://photoswipe.com/">PhotoSwipe</a>
 Author: Web Design Gold Coast
-Author URI: http://thriveweb.com.au/
-Version: 1.2.34
+Author URI: https://thriveweb.com.au/
+Version: 1.2.35
 Text Domain: photoswipe-masonry
+Requires at least: 6.0
 */
 
 /*  Copyright 2010  Dean Oakley  (email : dean@thriveweb.com.au)
@@ -44,6 +45,9 @@ class photoswipe_plugin_options
 
 		// set defaults
 		if (!is_array($options)) {
+
+			// Initialise missing options before assigning defaults.
+			$options = array();
 
 			$options['show_controls'] = false;
 
