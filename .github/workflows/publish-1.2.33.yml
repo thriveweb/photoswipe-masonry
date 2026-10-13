@@ -1,0 +1,42 @@
+# Publish the authorised PhotoSwipe Masonry 1.2.33 release.
+name: Publish PhotoSwipe Masonry 1.2.33
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/publish-1.2.33.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Tag and publish 1.2.33
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out plugin
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create release tag
+        run: |
+          # Create the release tag once and deploy the tagged files on retries.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git rev-parse "refs/tags/1.2.33" >/dev/null 2>&1; then
+            git checkout refs/tags/1.2.33
+          else
+            git tag -a 1.2.33 -m "PhotoSwipe Masonry 1.2.33"
+            git push origin 1.2.33
+          fi
+
+      - name: Deploy to WordPress.org
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          VERSION: 1.2.33
+          SLUG: photoswipe-masonry
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
