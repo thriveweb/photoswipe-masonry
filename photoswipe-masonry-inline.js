@@ -1,4 +1,5 @@
-
+// Initialise masonry after WordPress has rendered the gallery markup.
+jQuery(function ($) {
 jQuery(".psgal-inline").each(function () {
 
     var use_masonry = jQuery(this).data('psgal_use_masonary');
@@ -22,4 +23,5 @@ jQuery(".psgal-inline").each(function () {
         }
     }
     );
+});
 });
