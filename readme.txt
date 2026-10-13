@@ -47,7 +47,7 @@ See a [demo here](http://thriveweb.com.au/the-lab/PhotoSwipe/ "PhotoSwipeWP")
 
 == Screenshots ==
 
-1. Screenshot Default gallery layout
+1. Masonry gallery with three columns, varied image heights and white gutters
 2. Screenshot Popup layout
 
 == Changelog ==
