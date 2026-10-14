@@ -6,9 +6,12 @@ Description: This is a image gallery plugin for WordPress built using PhotoSwipe
 <a href="http://photoswipe.com/">PhotoSwipe</a>
 Author: Web Design Gold Coast
 Author URI: https://thriveweb.com.au/
-Version: 1.2.35
+Version: 1.2.36
 Text Domain: photoswipe-masonry
 Requires at least: 6.0
+Requires PHP: 7.4
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 /*  Copyright 2010  Dean Oakley  (email : dean@thriveweb.com.au)
@@ -190,27 +193,35 @@ class photoswipe_plugin_options
 		if ($options['white_theme']) wp_enqueue_style('white_theme', $photoswipe_wp_plugin_path . '/photoswipe-dist/white-skin/skin.css');
 		else wp_enqueue_style('pswp-skin', $photoswipe_wp_plugin_path . '/photoswipe-dist/default-skin/default-skin.css');
 
+		$plugin_dir = plugin_dir_path(__FILE__);
+		$inline_css_ver = (string) filemtime($plugin_dir . 'photoswipe-masonry-inline.css');
+		$inline_js_ver = (string) filemtime($plugin_dir . 'photoswipe-masonry-inline.js');
+
 		// register inline css for shortcode
-		wp_register_style('photoswipe-masonry-inline', $photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.css');
-		// wp_enqueue_style('photoswipe-masonry-inline', $photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.css');
+		wp_register_style('photoswipe-masonry-inline', $photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.css', array(), $inline_css_ver);
 
 		wp_enqueue_script('jquery');
 
 		//Core JS file
-		wp_enqueue_script('photoswipe', 			$photoswipe_wp_plugin_path . '/photoswipe-dist/photoswipe.min.js');
-
-		wp_enqueue_script('photoswipe-masonry-js', $photoswipe_wp_plugin_path . '/photoswipe-masonry.js');
+		wp_enqueue_script('photoswipe', $photoswipe_wp_plugin_path . '/photoswipe-dist/photoswipe.min.js', array('jquery'), false, true);
 
 		//UI JS file
-		wp_enqueue_script('photoswipe-ui-default', $photoswipe_wp_plugin_path . '/photoswipe-dist/photoswipe-ui-default.min.js');
+		wp_enqueue_script('photoswipe-ui-default', $photoswipe_wp_plugin_path . '/photoswipe-dist/photoswipe-ui-default.min.js', array('photoswipe'), false, true);
 
-		//Masonry - re-named to move to header
-		wp_enqueue_script('photoswipe-masonry', 	$photoswipe_wp_plugin_path . '/masonry.pkgd.min.js', '', '', false);
-		//imagesloaded
-		wp_enqueue_script('photoswipe-imagesloaded', 			$photoswipe_wp_plugin_path . '/imagesloaded.pkgd.min.js');
+		wp_enqueue_script('photoswipe-masonry-js', $photoswipe_wp_plugin_path . '/photoswipe-masonry.js', array('jquery', 'photoswipe', 'photoswipe-ui-default'), false, true);
 
-		// register inline js for the shortcode only
-		wp_register_script('photoswipe-masonry-js-inline', $photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.js');
+		//Masonry + imagesLoaded
+		wp_enqueue_script('photoswipe-masonry', $photoswipe_wp_plugin_path . '/masonry.pkgd.min.js', array('jquery'), false, true);
+		wp_enqueue_script('photoswipe-imagesloaded', $photoswipe_wp_plugin_path . '/imagesloaded.pkgd.min.js', array('jquery'), false, true);
+
+		// register inline js for the shortcode only (footer + deps so DOM exists)
+		wp_register_script(
+			'photoswipe-masonry-js-inline',
+			$photoswipe_wp_plugin_path . '/photoswipe-masonry-inline.js',
+			array('jquery', 'photoswipe-masonry', 'photoswipe-imagesloaded'),
+			$inline_js_ver,
+			true
+		);
 	}
 
 	// update & save the admin form settings
