@@ -1,0 +1,47 @@
+/* PhotoSwipe Masonry - Gallery block */
+figure.wp-block-gallery.psgal-block-wrap {
+    display: block;
+}
+.psgal.psgal-block {
+    --psgal-cols: var(--psgal-columns, 3);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    column-gap: var(--psgal-gap, 10px);
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+}
+.psgal.psgal-block figure.msnry_items {
+    float: none;
+    width: calc((100% - (var(--psgal-cols) - 1) * var(--psgal-gap, 10px)) / var(--psgal-cols));
+    margin: 0 0 var(--psgal-gap, 10px);
+    padding: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.psgal.psgal-block a {
+    display: block;
+}
+.psgal.psgal-block img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    border: 0;
+}
+.psgal.psgal-block figcaption {
+    font-size: 13px;
+    padding-top: 4px;
+    text-align: center;
+}
+.psgal-block-wrap .blocks-gallery-caption {
+    text-align: center;
+}
+
+@media (max-width: 650px) {
+    .psgal.psgal-block:not(.psgal-columns-1) {
+        --psgal-cols: 2;
+    }
+}

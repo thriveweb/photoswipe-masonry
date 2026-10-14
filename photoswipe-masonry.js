@@ -14,7 +14,7 @@ var photoswipe_masonry = function($){
 		var $pic     = $(this),
 		getItems = function() {
 			var items = [];
-			$pic.find('a').each(function() {
+			$pic.find('a[data-size]').each(function() {
 
 				var $href   = $(this).attr('href'),
 					$size   = $(this).data('size').split('x'),
@@ -137,7 +137,7 @@ var photoswipe_masonry = function($){
 
 				var items = [];
 
-				$pic.find('a').each(function() {
+				$pic.find('a[data-size]').each(function() {
 
 					var $href   = $(this).attr('href'),
 						$size   = $(this).data('size').split('x'),

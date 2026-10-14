@@ -6,7 +6,7 @@ Description: This is a image gallery plugin for WordPress built using PhotoSwipe
 <a href="http://photoswipe.com/">PhotoSwipe</a>
 Author: Web Design Gold Coast
 Author URI: https://thriveweb.com.au/
-Version: 1.2.36
+Version: 1.3.0
 Text Domain: photoswipe-masonry
 Requires at least: 6.0
 Requires PHP: 7.4
@@ -85,6 +85,13 @@ class photoswipe_plugin_options
 		add_action('save_post', array($this, 'photoswipe_save_post'), 10, 3);
 		add_filter('plugin_action_links_photoswipe-masonry' . '/photoswipe-masonry.php', array($this, 'photoswipe_settings_link'), 10, 1);
 		add_action('post_updated', array($this, 'photoswipe_update_post'), 10, 3);
+
+		// Gallery block support
+		add_action('init', array($this, 'photoswipe_register_block_assets'));
+		add_filter('register_block_type_args', array($this, 'photoswipe_gallery_block_args'), 10, 2);
+		add_action('enqueue_block_editor_assets', array($this, 'photoswipe_block_editor_assets'));
+		add_action('enqueue_block_assets', array($this, 'photoswipe_block_editor_styles'));
+		add_filter('render_block_core/gallery', array($this, 'photoswipe_render_gallery_block'), 10, 2);
 	}
 
 	// add allowed attributes
@@ -502,6 +509,152 @@ class photoswipe_plugin_options
 
 		// Returns null if no attachment is found
 		return $attachment[0];
+	}
+
+	// register front-end and editor assets for the Gallery block
+	public function photoswipe_register_block_assets()
+	{
+		$url = plugins_url('', __FILE__);
+		$dir = plugin_dir_path(__FILE__);
+
+		wp_register_style('photoswipe-masonry-block', $url . '/photoswipe-masonry-block.css', array(), (string) filemtime($dir . 'photoswipe-masonry-block.css'));
+
+		// masonry + imagesLoaded handles are registered in photoswipe_scripts_method
+		wp_register_script('photoswipe-masonry-block', $url . '/photoswipe-masonry-block.js', array('jquery', 'photoswipe-masonry', 'photoswipe-imagesloaded'), (string) filemtime($dir . 'photoswipe-masonry-block.js'), true);
+
+		wp_register_script('photoswipe-masonry-block-editor', $url . '/photoswipe-masonry-block-editor.js', array('wp-blocks', 'wp-hooks', 'wp-compose', 'wp-element', 'wp-data', 'wp-block-editor', 'wp-components', 'wp-i18n'), (string) filemtime($dir . 'photoswipe-masonry-block-editor.js'), true);
+
+		wp_register_style('photoswipe-masonry-block-editor', $url . '/photoswipe-masonry-block-editor.css', array(), (string) filemtime($dir . 'photoswipe-masonry-block-editor.css'));
+	}
+
+	// add the masonry attributes to the core Gallery block
+	public function photoswipe_gallery_block_args($args, $block_type)
+	{
+		if ('core/gallery' !== $block_type) {
+			return $args;
+		}
+
+		if (!isset($args['attributes']) || !is_array($args['attributes'])) {
+			$args['attributes'] = array();
+		}
+		$args['attributes']['psMasonry'] = array('type' => 'boolean', 'default' => false);
+		$args['attributes']['psGap'] = array('type' => 'number', 'default' => 10);
+
+		return $args;
+	}
+
+	public function photoswipe_block_editor_assets()
+	{
+		wp_enqueue_script('photoswipe-masonry-block-editor');
+	}
+
+	// editor preview styles (enqueue_block_assets reaches the iframed editor canvas)
+	public function photoswipe_block_editor_styles()
+	{
+		if (is_admin()) {
+			wp_enqueue_style('photoswipe-masonry-block-editor');
+		}
+	}
+
+	// render Gallery blocks with the Masonry option as PhotoSwipe masonry galleries
+	public function photoswipe_render_gallery_block($block_content, $block)
+	{
+		$attrs = isset($block['attrs']) && is_array($block['attrs']) ? $block['attrs'] : array();
+
+		if (empty($attrs['psMasonry']) || is_admin() || wp_is_json_request()) {
+			return $block_content;
+		}
+
+		$images = array();
+
+		if (!empty($block['innerBlocks'])) {
+			foreach ($block['innerBlocks'] as $inner) {
+				if ('core/image' !== $inner['blockName']) {
+					continue;
+				}
+				$id = isset($inner['attrs']['id']) ? (int) $inner['attrs']['id'] : 0;
+
+				// PhotoSwipe needs real dimensions; fall back to the core gallery for non-library images
+				if (!$id || !wp_attachment_is_image($id)) {
+					return $block_content;
+				}
+
+				$html = isset($inner['innerHTML']) ? $inner['innerHTML'] : '';
+				$caption = preg_match('#<figcaption[^>]*>(.*?)</figcaption>#is', $html, $m) ? trim($m[1]) : null;
+				$alt = preg_match('#<img[^>]*\salt="([^"]*)"#i', $html, $m) ? html_entity_decode($m[1], ENT_QUOTES) : null;
+
+				$images[] = array('id' => $id, 'caption' => $caption, 'alt' => $alt);
+			}
+		} elseif (!empty($attrs['ids'])) {
+			// galleries saved before WordPress 5.9
+			foreach ((array) $attrs['ids'] as $id) {
+				$id = (int) $id;
+				if ($id && wp_attachment_is_image($id)) {
+					$images[] = array('id' => $id, 'caption' => null, 'alt' => null);
+				}
+			}
+		}
+
+		if (empty($images)) {
+			return $block_content;
+		}
+
+		static $block_count = 0;
+		$block_count++;
+
+		$options = get_option('photoswipe_options');
+		$gallery_id = (int) get_the_ID() . '_block_' . $block_count;
+		$columns = isset($attrs['columns']) ? (int) $attrs['columns'] : min(3, count($images));
+		$columns = max(1, min(8, $columns));
+		$gap = isset($attrs['psGap']) ? (int) $attrs['psGap'] : 10;
+		$gap = max(0, min(100, $gap));
+		$size = !empty($attrs['sizeSlug']) ? $attrs['sizeSlug'] : 'large';
+
+		$wrap_classes = array('wp-block-gallery', 'psgal-block-wrap');
+		if (!empty($attrs['align'])) {
+			$wrap_classes[] = 'align' . sanitize_html_class($attrs['align']);
+		}
+		if (!empty($attrs['className'])) {
+			$wrap_classes[] = $attrs['className'];
+		}
+
+		$gallery_caption = preg_match('#<figcaption[^>]*>(.*?)</figcaption>#is', isset($block['innerHTML']) ? $block['innerHTML'] : '', $m) ? trim($m[1]) : '';
+
+		wp_enqueue_style('photoswipe-masonry-block');
+		wp_enqueue_script('photoswipe-masonry-block');
+
+		ob_start();
+	?>
+		<figure class="<?php echo esc_attr(implode(' ', $wrap_classes)); ?>">
+			<div id="<?php echo esc_attr('psgal_' . $gallery_id); ?>" class="<?php echo esc_attr('psgal psgal-block psgal-columns-' . $columns); ?>" style="<?php echo esc_attr('--psgal-columns:' . $columns . ';--psgal-gap:' . $gap . 'px;'); ?>" data-psgal-gap="<?php echo esc_attr($gap); ?>" itemscope itemtype="http://schema.org/ImageGallery">
+				<?php
+				foreach ($images as $image) :
+					$full = wp_get_attachment_image_src($image['id'], 'photoswipe_full');
+					if (!$full) {
+						continue;
+					}
+					$caption = null !== $image['caption'] ? $image['caption'] : wp_get_attachment_caption($image['id']);
+					$img_attr = array('class' => 'msnry_thumb', 'itemprop' => 'thumbnail');
+					if (null !== $image['alt']) {
+						$img_attr['alt'] = $image['alt'];
+					}
+				?>
+					<figure class="msnry_items" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+						<a href="<?php echo esc_url($full[0]); ?>" itemprop="contentUrl" data-size="<?php echo esc_attr($full[1] . 'x' . $full[2]); ?>" data-caption="<?php echo esc_attr(wp_kses_post($caption)); ?>">
+							<?php echo wp_get_attachment_image($image['id'], $size, false, $img_attr); ?>
+						</a>
+						<?php if ($caption && !empty($options['show_captions'])) : ?>
+							<figcaption class="photoswipe-gallery-caption"><?php echo wp_kses_post($caption); ?></figcaption>
+						<?php endif; ?>
+					</figure>
+				<?php endforeach; ?>
+			</div>
+			<?php if ($gallery_caption) : ?>
+				<figcaption class="blocks-gallery-caption wp-element-caption"><?php echo wp_kses_post($gallery_caption); ?></figcaption>
+			<?php endif; ?>
+		</figure>
+<?php
+		return ob_get_clean();
 	}
 
 	/**

@@ -1,0 +1,22 @@
+/* PhotoSwipe Masonry - Gallery block editor preview */
+.wp-block-gallery.has-nested-images.is-psgal-masonry {
+    display: block !important;
+    column-count: var(--psgal-columns, 3);
+    column-gap: var(--psgal-gap, 10px);
+}
+.wp-block-gallery.has-nested-images.is-psgal-masonry figure.wp-block-image:not(#individual-image) {
+    display: block;
+    width: 100% !important;
+    height: auto;
+    margin: 0 0 var(--psgal-gap, 10px) !important;
+    break-inside: avoid;
+}
+.wp-block-gallery.has-nested-images.is-psgal-masonry figure.wp-block-image:not(#individual-image) img {
+    width: 100%;
+    height: auto !important;
+    object-fit: initial;
+}
+.wp-block-gallery.has-nested-images.is-psgal-masonry > .blocks-gallery-caption,
+.wp-block-gallery.has-nested-images.is-psgal-masonry > .block-list-appender {
+    column-span: all;
+}

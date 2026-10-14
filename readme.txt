@@ -8,7 +8,7 @@ Tags: photoswipe, gallery, image gallery, masonry, lightbox
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.36
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,36 @@ Some other features include:
 
 * Keyboard control
 * Supports multiple galleries
+* Block editor support with a "PhotoSwipe Masonry Gallery" block, plus a Masonry option for the standard Gallery block
+* Simple columns and spacing controls
+
+= How to add a masonry gallery (block editor) =
+
+1. Edit a post or page and click the + (Add block) button.
+2. Search for "masonry" or "photoswipe" and choose **PhotoSwipe Masonry Gallery**. You can also type `/masonry` in an empty paragraph.
+3. Click **Upload** or **Media Library** and choose your images. Drag images in the gallery to reorder them.
+4. With the gallery selected, open the block settings sidebar (the gear icon, top right) and find the **PhotoSwipe Masonry** panel.
+5. Set **Columns** (1-8) and **Spacing** (0-60px).
+6. Save or update the page. Visitors can click any image to open it in the PhotoSwipe lightbox.
+
+= Turn an existing Gallery block into a masonry gallery =
+
+1. Select the Gallery block. If a single image is selected, click the "Select parent" arrow in the toolbar to select the whole gallery.
+2. In the block settings sidebar, open the **PhotoSwipe Masonry** panel.
+3. Turn on **Masonry layout**, then set Columns and Spacing.
+
+You can also select a Gallery block, click its icon in the toolbar and transform it into a **PhotoSwipe Masonry Gallery**. To go back to a standard gallery, turn **Masonry layout** off.
+
+= Shortcode galleries (classic editor) =
+
+Create a gallery with the Add Media button, or add a shortcode such as `[gallery ids="1,2,3" columns="3"]`. Existing shortcode galleries keep working as before and use the thumbnail settings under Settings > PhotoSwipe.
+
+= Good to know =
+
+* Masonry galleries show two columns on screens narrower than 650px.
+* Masonry galleries always open images in the PhotoSwipe lightbox, so the Gallery "Link to" setting is ignored.
+* Images must come from the Media Library. A gallery that contains an image inserted from a URL shows as a standard Gallery.
+* Image captions are shown under thumbnails when "Show captions on thumbnails?" is enabled under Settings > PhotoSwipe. Captions always appear in the lightbox.
 
 See a [demo here](http://thriveweb.com.au/the-lab/PhotoSwipe/ "PhotoSwipeWP")
 
@@ -45,8 +75,22 @@ See a [demo here](http://thriveweb.com.au/the-lab/PhotoSwipe/ "PhotoSwipeWP")
 
 1. Upload `/photoSwipe-masonry/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Upload some photos to the post or page where you want the gallery
-4. Use WordPress to create a gallery and insert it in the page
+3. In the block editor, add a **PhotoSwipe Masonry Gallery** block and choose your images (see "How to add a masonry gallery" above)
+4. Or, in the classic editor, use WordPress to create a gallery and insert it in the page
+
+== Frequently Asked Questions ==
+
+= I can't find the PhotoSwipe Masonry panel =
+
+Make sure the whole gallery is selected, not a single image inside it. The block settings sidebar only shows the panel for the Gallery block. If you've just updated the plugin, refresh the editor.
+
+= Can I change columns and spacing for each gallery? =
+
+Yes. Each masonry gallery has its own Columns and Spacing settings in the PhotoSwipe Masonry panel.
+
+= Will my existing galleries change? =
+
+No. Shortcode galleries and existing Gallery blocks look the same until you turn on Masonry layout for them.
 
 == Screenshots ==
 
@@ -54,6 +98,13 @@ See a [demo here](http://thriveweb.com.au/the-lab/PhotoSwipe/ "PhotoSwipeWP")
 2. Screenshot Popup layout
 
 == Changelog ==
+
+= 1.3.0 =
+* Add a Masonry layout option to the standard Gallery block, with columns and spacing controls and an editor preview.
+* Add a "PhotoSwipe Masonry Gallery" block to the block inserter.
+* Masonry Gallery blocks open in the PhotoSwipe lightbox and use two columns on small screens.
+* Fix the lightbox failing when an image caption contains a link.
+* Existing [gallery] shortcode galleries are unchanged.
 
 = 1.2.36 =
 * Fix masonry layout on small screens: galleries now display in two columns below 650px and re-layout on resize.
